@@ -20,8 +20,8 @@
     "extract-loader": "^3.1.0",
     "file-loader": "^5.0.2",
     "html-webpack-plugin": "^4.3.0",
-    "node-sass": "^4.13.0",
     "postcss-loader": "^3.0.0",
+    "sass": "^1.26.5",
     "sass-loader": "^7.3.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
@@ -30,9 +30,11 @@
   },
   "dependencies": {
     "@bikeshaving/crank": "^0.1.2",
-    "@material/button": "^4.0.0",
-    "@material/ripple": "^4.0.0",
-    "@material/typography": "^4.0.0"
+    "@material/button": "^6.0.0",
+    "@material/checkbox": "^6.0.0",
+    "@material/form-field": "^6.0.0",
+    "@material/ripple": "^6.0.0",
+    "@material/typography": "^6.0.0"
   },
   "engines": {
     "node": "10.x"
