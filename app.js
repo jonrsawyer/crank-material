@@ -2,6 +2,7 @@ import Button from './src/Button';
 import IconButton from './src/IconButton';
 import ToggleButton from './src/ToggleButton';
 import RadioButton from './src/RadioButton';
+import Switch from './src/Switch';
 import Checkbox from './src/Checkbox';
 import Chip from './src/Chip';
 import ChipSet from './src/ChipSet';
@@ -81,13 +82,23 @@ function* App() {
                     </div>
                     <div>
                         <h3>RadioButton</h3>
-                        <RadioButton checked={radio === 0} onclick={() => onRadio(0)}/>
-                        <RadioButton checked={radio === 1} onclick={() => onRadio(1)}/>
-                        <RadioButton checked={radio === 2} onclick={() => onRadio(2)}/>
-                        <RadioButton checked={radio === 3} onclick={() => onRadio(3)}/>
-                        <RadioButton checked={radio === 4} onclick={() => onRadio(4)}/>
-                        <RadioButton disabled={true}/>
-                        <RadioButton checked={true} disabled={true}/>
+                        <RadioButton checked={radio === 0} onclick={() => onRadio(0)} />
+                        <RadioButton checked={radio === 1} onclick={() => onRadio(1)} />
+                        <RadioButton checked={radio === 2} onclick={() => onRadio(2)} />
+                        <RadioButton checked={radio === 3} onclick={() => onRadio(3)} />
+                        <RadioButton checked={radio === 4} onclick={() => onRadio(4)} />
+                        <RadioButton disabled={true} />
+                        <RadioButton checked={true} disabled={true} />
+                    </div>
+                    <div>
+                        <h3>Switch</h3>
+                        <Switch />
+                        <p></p>
+                        <Switch checked={true} />
+                        <p></p>
+                        <Switch disabled={true} />
+                        <p></p>
+                        <Switch checked={true} disabled={true} />
                     </div>
                     <div>
                         <h3>Chips</h3>
