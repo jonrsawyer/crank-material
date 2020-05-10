@@ -1,6 +1,7 @@
 import Button from './src/Button';
 import IconButton from './src/IconButton';
 import ToggleButton from './src/ToggleButton';
+import RadioButton from './src/RadioButton';
 import Checkbox from './src/Checkbox';
 import Chip from './src/Chip';
 import ChipSet from './src/ChipSet';
@@ -13,6 +14,7 @@ import { Fragment } from '@bikeshaving/crank';
 function* App() {
     let iconAfter;
     let toggled;
+    let radio = 0;
 
     try {
         const onClick = () => {
@@ -22,6 +24,11 @@ function* App() {
 
         const onToggle = () => {
             toggled = !toggled;
+            this.refresh();
+        }
+
+        const onRadio = (r) => {
+            radio = r;
             this.refresh();
         }
 
@@ -65,7 +72,22 @@ function* App() {
                         <h3>Checkbox</h3>
                         <Checkbox crank-key="1" checked={true}></Checkbox>
                         <Checkbox crank-key="2" checked={true} disabled={true}></Checkbox>
-                        <Checkbox crank-key="3" indeterminate={true}></Checkbox>
+                        <p></p>
+                        <Checkbox crank-key="3" ></Checkbox>
+                        <Checkbox crank-key="4" disabled={true}></Checkbox>
+                        <p></p>
+                        <Checkbox crank-key="5" indeterminate={true}></Checkbox>
+                        <Checkbox crank-key="6" disabled={true} indeterminate={true}></Checkbox>
+                    </div>
+                    <div>
+                        <h3>RadioButton</h3>
+                        <RadioButton checked={radio === 0} onclick={() => onRadio(0)}/>
+                        <RadioButton checked={radio === 1} onclick={() => onRadio(1)}/>
+                        <RadioButton checked={radio === 2} onclick={() => onRadio(2)}/>
+                        <RadioButton checked={radio === 3} onclick={() => onRadio(3)}/>
+                        <RadioButton checked={radio === 4} onclick={() => onRadio(4)}/>
+                        <RadioButton disabled={true}/>
+                        <RadioButton checked={true} disabled={true}/>
                     </div>
                     <div>
                         <h3>Chips</h3>
