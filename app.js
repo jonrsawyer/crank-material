@@ -8,6 +8,10 @@ import Chip from './src/Chip';
 import ChipSet from './src/ChipSet';
 import CircularProgress from './src/CircularProgress';
 import Textfield from './src/Textfield';
+import Menu from './src/Menu';
+import MenuAnchor from './src/MenuAnchor';
+import MenuDivider from './src/MenuDivider';
+import MenuItem from './src/MenuItem';
 import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 
@@ -16,6 +20,8 @@ function* App() {
     let iconAfter;
     let toggled;
     let radio = 0;
+    let menuOpen;
+    let menuClickCount = 0;
 
     try {
         const onClick = () => {
@@ -30,6 +36,17 @@ function* App() {
 
         const onRadio = (r) => {
             radio = r;
+            this.refresh();
+        }
+
+        const openMenu = () => {
+            menuOpen = true;
+            this.refresh();
+            menuOpen = false; // need to reset this so other calls to refresh don't pop up the menu
+        }
+
+        const menuItemClicked = () => {
+            menuClickCount++;
             this.refresh();
         }
 
@@ -125,6 +142,26 @@ function* App() {
                         <CircularProgress size="small" progress={0}></CircularProgress>
                         <CircularProgress size="medium" progress={0.33}></CircularProgress>
                         <CircularProgress size="large" indeterminate={true} animateColor={true}></CircularProgress>
+                    </div>
+                    <div>
+                        <h3>Menu</h3>
+                        <MenuAnchor>
+                            <Button onclick={openMenu}>Menu</Button>
+                            <Menu open={menuOpen}>
+                                <MenuItem onclick={menuItemClicked}>Menu Item</MenuItem>
+                                <MenuDivider />
+                                <MenuItem icon="check_box_outline_blank">One</MenuItem>
+                                <MenuItem icon="check_box">Two</MenuItem>
+                                <MenuItem icon="check_box_outline_blank">Three</MenuItem>
+                                <MenuDivider />
+                                <MenuItem icon="radio_button_unchecked">Four</MenuItem>
+                                <MenuItem icon="radio_button_unchecked">Five</MenuItem>
+                                <MenuItem icon="radio_button_checked">Six</MenuItem>
+                                <MenuDivider />
+                                <MenuItem disabled={true}>Disabled</MenuItem>
+                            </Menu>
+                        </MenuAnchor>
+                        <p>Menu item clicked {menuClickCount} times.</p>
                     </div>
                     <div>
                         <h3>Textfield</h3>
