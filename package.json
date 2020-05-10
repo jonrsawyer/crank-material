@@ -35,7 +35,9 @@
     "@material/chips": "^6.0.0",
     "@material/circular-progress": "^6.0.0",
     "@material/form-field": "^6.0.0",
+    "@material/icon-button": "^6.0.0",
     "@material/ripple": "^6.0.0",
+    "@material/textfield": "^6.0.0",
     "@material/typography": "^6.0.0"
   },
   "engines": {

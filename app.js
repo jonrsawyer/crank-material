@@ -1,14 +1,18 @@
 import Button from './src/Button';
+import IconButton from './src/IconButton';
+import ToggleButton from './src/ToggleButton';
 import Checkbox from './src/Checkbox';
 import Chip from './src/Chip';
 import ChipSet from './src/ChipSet';
 import CircularProgress from './src/CircularProgress';
+import Textfield from './src/Textfield';
 import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 
 
 function* App() {
     let iconAfter;
+    let toggled;
 
     try {
         const onClick = () => {
@@ -16,9 +20,12 @@ function* App() {
             this.refresh();
         }
 
+        const onToggle = () => {
+            toggled = !toggled;
+            this.refresh();
+        }
+
         /*
-                        <CircularProgress size="small" progress={0}></CircularProgress>
-                        <CircularProgress size="medium" progress={0.33}></CircularProgress>
         */
 
         while (true) {
@@ -26,7 +33,33 @@ function* App() {
                 <Fragment>
                     <div>
                         <h3>Button</h3>
-                        <Button icon='emoji_people' iconAfter={iconAfter} onclick={onClick}>Hello World</Button>
+                        <Button type="text">Text Button</Button>
+                        &nbsp;
+                        <Button type="text" icon='emoji_people'>Text Button</Button>
+                        <p></p>
+                        <Button type="outlined">Outlined Button</Button>
+                        &nbsp;
+                        <Button type="outlined" icon='emoji_people'>Outlined Button</Button>
+                        <p></p>
+                        <Button type="unelevated">Unelevated Button</Button>
+                        &nbsp;
+                        <Button type="unelevated" icon='emoji_people'>Unelevated Button</Button>
+                        <p></p>
+                        <Button type="raised">Raised Button</Button>
+                        &nbsp;
+                        <Button type="raised" icon='emoji_people'>Raised Button</Button>
+                        <p></p>
+                        <Button type="raised" icon='emoji_people' iconAfter={iconAfter} onclick={onClick}>Click Me</Button>
+                    </div>
+                    <div>
+                        <h3>Icon Button</h3>
+                        <IconButton icon="emoji_people" />
+                        <IconButton disabled={true} icon="emoji_people" />
+                    </div>
+                    <div>
+                        <h3>Toggle Button</h3>
+                        <ToggleButton icon="favorite" toggledIcon="favorite_border" onclick={onToggle} toggled={toggled} />
+                        <ToggleButton disabled={true} icon="favorite" toggledIcon="favorite_border" toggled={toggled} />
                     </div>
                     <div>
                         <h3>Checkbox</h3>
@@ -56,7 +89,27 @@ function* App() {
                     </div>
                     <div>
                         <h3>Circular Progress</h3>
+                        <CircularProgress size="small" progress={0}></CircularProgress>
+                        <CircularProgress size="medium" progress={0.33}></CircularProgress>
                         <CircularProgress size="large" indeterminate={true} animateColor={true}></CircularProgress>
+                    </div>
+                    <div>
+                        <h3>Textfield</h3>
+                        <Textfield type="filled" label="First Name"></Textfield>
+                        &nbsp;
+                        <Textfield type="filled"></Textfield>
+                        <p></p>
+                        <Textfield type="outlined" label="Last Name"></Textfield>
+                        &nbsp;
+                        <Textfield type="outlined"></Textfield>
+                        <p></p>
+                        <Textfield type="full-width" label="Address"></Textfield>
+                        &nbsp;
+                        <Textfield type="full-width"></Textfield>
+                        <p></p>
+                        <Textfield type="textarea" label="Description"></Textfield>
+                        &nbsp;
+                        <Textfield type="textarea"></Textfield>
                     </div>
                 </Fragment>
             )

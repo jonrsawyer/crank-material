@@ -3,10 +3,18 @@ import { MDCRipple } from "@material/ripple";
 // TODO This has no effect until build process generates the HTML file
 import './Button.scss';
 
+function typeClass(type) {
+    switch (type) {
+        case 'outlined': return 'mdc-button--outlined';
+        case 'raised': return 'mdc-button--raised';
+        case 'unelevated': return 'mdc-button--unelevated'; // or 'contained'?
+        default: return '';
+    }
+}
+
 export default async function* Button() {
-    for await (const props of this) {
-        const { children, disabled, icon, iconAfter, onclick, raised = true } = props;
-        const buttonClass = 'mdc-button mdc-button--touch mdc-button--' + (raised ? 'raised' : 'unelevated');
+    for await (const { children, disabled, icon, iconAfter, onclick, type } of this) {
+        const buttonClass = 'mdc-button mdc-button--touch ' + typeClass(type);
         const iTag = <i class="material-icons mdc-button__icon" aria-hidden="true">{icon}</i>;
         const beforeIcon = !!icon && !iconAfter && iTag;
         const afterIcon = !!icon && iconAfter && iTag;
