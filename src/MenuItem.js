@@ -3,7 +3,7 @@ export default async function* MenuItem() {
 
         const iconTag = icon && (
             <span class="mdc-list-item__graphic mdc-menu__selection-group-icon">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">{icon}</i>
+                <i class="material-icons" aria-hidden="true">{icon}</i>
             </span>
         );
 

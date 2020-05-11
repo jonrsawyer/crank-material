@@ -21,7 +21,28 @@ function* App() {
     let toggled;
     let radio = 0;
     let menuOpen;
-    let menuClickCount = 0;
+
+    const self = this;
+
+    const menuData = {
+        menuClickCount: 0
+    }
+
+    const menuDataProxy = new Proxy([menuData], {
+        get: function (proxyTarget, propertyKey) {
+            const foundParent = proxyTarget.find(parent => parent[propertyKey] !== undefined);
+            return foundParent && foundParent[propertyKey];
+        },
+
+        set: function (proxyTarget, propertyKey, value) {
+            const foundParent = proxyTarget.find(parent => parent[propertyKey] !== undefined);
+            if (foundParent && foundParent[propertyKey] !== value) {
+                foundParent[propertyKey] = value;
+                self.refresh();
+            }
+            return true; // Proxy contract
+        }
+    });
 
     try {
         const onClick = () => {
@@ -45,13 +66,10 @@ function* App() {
             menuOpen = false; // need to reset this so other calls to refresh don't pop up the menu
         }
 
-        const menuItemClicked = () => {
-            menuClickCount++;
-            this.refresh();
-        }
-
-        /*
-        */
+        // Inlined this
+        // const menuItemClicked = () => {
+        //     menuDataProxy.menuClickCount++;
+        // }
 
         while (true) {
             yield (
@@ -148,7 +166,7 @@ function* App() {
                         <MenuAnchor>
                             <Button onclick={openMenu}>Menu</Button>
                             <Menu open={menuOpen}>
-                                <MenuItem onclick={menuItemClicked}>Menu Item</MenuItem>
+                                <MenuItem onclick={() => menuDataProxy.menuClickCount++}>Menu Item</MenuItem>
                                 <MenuDivider />
                                 <MenuItem icon="check_box_outline_blank">One</MenuItem>
                                 <MenuItem icon="check_box">Two</MenuItem>
@@ -161,7 +179,7 @@ function* App() {
                                 <MenuItem disabled={true}>Disabled</MenuItem>
                             </Menu>
                         </MenuAnchor>
-                        <p>Menu item clicked {menuClickCount} times.</p>
+                        <p>Menu item clicked {menuDataProxy.menuClickCount} times.</p>
                     </div>
                     <div>
                         <h3>Textfield</h3>
