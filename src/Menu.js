@@ -4,7 +4,7 @@ import { MDCMenu } from '@material/menu';
 // import './Menu.scss';
 
 export default async function* Menu() {
-    for await (const { children, open } of this) {
+    for await (const { children, onclosed, open } of this) {
 
         const promise = yield (
             <div class="mdc-menu mdc-menu-surface">
@@ -16,5 +16,6 @@ export default async function* Menu() {
         const div = await promise; // in case children are async
         const menu = new MDCMenu(div); // for ripple
         menu.open = open;
+        menu.listen('MDCMenuSurface:closed', onclosed);
     }
 }

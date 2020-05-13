@@ -14,56 +14,52 @@ import MenuDivider from './src/MenuDivider';
 import MenuItem from './src/MenuItem';
 import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
+import wrap from './src/wrap';
 
 
 function* App() {
-    let iconAfter;
-    let toggled;
-    let radio = 0;
-    let menuOpen;
 
     const self = this;
 
-    const menuData = {
-        menuClickCount: 0
+    const hiddenUIData = {
+        iconAfter: false,
+        toggled: false,
+        radio: 0,
+        menuOpen: false,
+        menuData: {
+            menuClickCount: 0
+        }
     }
 
-    const menuDataProxy = new Proxy([menuData], {
-        get: function (proxyTarget, propertyKey) {
-            const foundParent = proxyTarget.find(parent => parent[propertyKey] !== undefined);
-            return foundParent && foundParent[propertyKey];
-        },
-
-        set: function (proxyTarget, propertyKey, value) {
-            const foundParent = proxyTarget.find(parent => parent[propertyKey] !== undefined);
-            if (foundParent && foundParent[propertyKey] !== value) {
-                foundParent[propertyKey] = value;
-                self.refresh();
-            }
-            return true; // Proxy contract
-        }
-    });
+    const uiData = wrap(hiddenUIData, () => this.refresh());
 
     try {
         const onClick = () => {
-            iconAfter = !iconAfter;
-            this.refresh();
+            uiData.iconAfter = !uiData.iconAfter;
+            //this.refresh();
         }
 
         const onToggle = () => {
-            toggled = !toggled;
-            this.refresh();
+            uiData.toggled = !uiData.toggled;
+            //this.refresh();
         }
 
         const onRadio = (r) => {
-            radio = r;
-            this.refresh();
+            uiData.radio = r;
+            //this.refresh();
         }
 
         const openMenu = () => {
-            menuOpen = true;
-            this.refresh();
-            menuOpen = false; // need to reset this so other calls to refresh don't pop up the menu
+            uiData.menuOpen = true;
+            //this.refresh();
+            // uiData.menuOpen = false; // need to reset this so other calls to refresh don't pop up the menu
+        }
+
+        const onClosed = () => {
+            if (uiData.menuOpen) {
+                uiData.menuOpen = false;
+                console.log("Menu closed");
+            }
         }
 
         // Inlined this
@@ -92,7 +88,7 @@ function* App() {
                         &nbsp;
                         <Button type="raised" icon='emoji_people'>Raised Button</Button>
                         <p></p>
-                        <Button type="raised" icon='emoji_people' iconAfter={iconAfter} onclick={onClick}>Click Me</Button>
+                        <Button type="raised" icon='emoji_people' iconAfter={uiData.iconAfter} onclick={onClick}>Click Me</Button>
                     </div>
                     <div>
                         <h3>Icon Button</h3>
@@ -101,8 +97,8 @@ function* App() {
                     </div>
                     <div>
                         <h3>Toggle Button</h3>
-                        <ToggleButton icon="favorite" toggledIcon="favorite_border" onclick={onToggle} toggled={toggled} />
-                        <ToggleButton disabled={true} icon="favorite" toggledIcon="favorite_border" toggled={toggled} />
+                        <ToggleButton icon="favorite" toggledIcon="favorite_border" onclick={onToggle} toggled={uiData.toggled} />
+                        <ToggleButton disabled={true} icon="favorite" toggledIcon="favorite_border" toggled={uiData.toggled} />
                     </div>
                     <div>
                         <h3>Checkbox</h3>
@@ -117,11 +113,11 @@ function* App() {
                     </div>
                     <div>
                         <h3>RadioButton</h3>
-                        <RadioButton checked={radio === 0} onclick={() => onRadio(0)} />
-                        <RadioButton checked={radio === 1} onclick={() => onRadio(1)} />
-                        <RadioButton checked={radio === 2} onclick={() => onRadio(2)} />
-                        <RadioButton checked={radio === 3} onclick={() => onRadio(3)} />
-                        <RadioButton checked={radio === 4} onclick={() => onRadio(4)} />
+                        <RadioButton checked={uiData.radio === 0} onclick={() => onRadio(0)} />
+                        <RadioButton checked={uiData.radio === 1} onclick={() => onRadio(1)} />
+                        <RadioButton checked={uiData.radio === 2} onclick={() => onRadio(2)} />
+                        <RadioButton checked={uiData.radio === 3} onclick={() => onRadio(3)} />
+                        <RadioButton checked={uiData.radio === 4} onclick={() => onRadio(4)} />
                         <RadioButton disabled={true} />
                         <RadioButton checked={true} disabled={true} />
                     </div>
@@ -165,8 +161,8 @@ function* App() {
                         <h3>Menu</h3>
                         <MenuAnchor>
                             <Button onclick={openMenu}>Menu</Button>
-                            <Menu open={menuOpen}>
-                                <MenuItem onclick={() => menuDataProxy.menuClickCount++}>Menu Item</MenuItem>
+                            <Menu open={uiData.menuOpen} onclosed={onClosed}>
+                                <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
                                 <MenuDivider />
                                 <MenuItem icon="check_box_outline_blank">One</MenuItem>
                                 <MenuItem icon="check_box">Two</MenuItem>
@@ -179,7 +175,7 @@ function* App() {
                                 <MenuItem disabled={true}>Disabled</MenuItem>
                             </Menu>
                         </MenuAnchor>
-                        <p>Menu item clicked {menuDataProxy.menuClickCount} times.</p>
+                        <p>Menu item clicked {uiData.menuData.menuClickCount} times.</p>
                     </div>
                     <div>
                         <h3>Textfield</h3>
