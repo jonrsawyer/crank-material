@@ -20,6 +20,6 @@ export default async function* RadioButton() {
             </div>
         );
         const div = await promise; // in case children are async
-        new MDCRadio(div.firstChild);
+        new MDCRadio(div.firstElementChild);
     }
 }

@@ -19,6 +19,6 @@ export default async function* Switch() {
             </div>
         );
         const div = await promise; // in case children are async
-        new MDCSwitch(div.firstChild);
+        new MDCSwitch(div.firstElementChild);
     }
 }

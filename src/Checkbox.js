@@ -25,6 +25,6 @@ export default async function* Checkbox() {
             </div>
         );
         const div = await promise; // in case children are async
-        new MDCCheckbox(div.firstChild); // for ripple
+        new MDCCheckbox(div.firstElementChild); // for ripple
     }
 }

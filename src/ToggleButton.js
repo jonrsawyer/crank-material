@@ -19,10 +19,10 @@ export default async function* ToggleButton() {
         const div = await promise; // in case children are async
         // Using MDCRipple gives me the data model I want: Controller drives View, no state in View. But the visual ripple
         // stutters when I do it with MDCRipple this way.
-        const ripple = new MDCRipple(div.firstChild);
+        const ripple = new MDCRipple(div.firstElementChild);
         ripple.unbounded = true;
         // Using MDCIconButtonToggle looks better visually, but keeps toggle state in MDCIconButtonToggle class.
-        // const toggle = new MDCIconButtonToggle(div.firstChild);
+        // const toggle = new MDCIconButtonToggle(div.firstElementChild);
         // toggle.unbounded = true;
         // toggle.listen('MDCIconButtonToggle:change', onchange);
     }

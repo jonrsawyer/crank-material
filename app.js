@@ -1,5 +1,4 @@
 import Button from './src/Button';
-import IconButton from './src/IconButton';
 import ToggleButton from './src/ToggleButton';
 import RadioButton from './src/RadioButton';
 import Switch from './src/Switch';
@@ -9,7 +8,6 @@ import ChipSet from './src/ChipSet';
 import CircularProgress from './src/CircularProgress';
 import Textfield from './src/Textfield';
 import Menu from './src/Menu';
-import MenuAnchor from './src/MenuAnchor';
 import MenuDivider from './src/MenuDivider';
 import MenuItem from './src/MenuItem';
 import { renderer } from '@bikeshaving/crank/dom';
@@ -36,36 +34,15 @@ function* App() {
     try {
         const onClick = () => {
             uiData.iconAfter = !uiData.iconAfter;
-            //this.refresh();
         }
 
         const onToggle = () => {
             uiData.toggled = !uiData.toggled;
-            //this.refresh();
         }
 
         const onRadio = (r) => {
             uiData.radio = r;
-            //this.refresh();
         }
-
-        const openMenu = () => {
-            uiData.menuOpen = true;
-            //this.refresh();
-            // uiData.menuOpen = false; // need to reset this so other calls to refresh don't pop up the menu
-        }
-
-        const onClosed = () => {
-            if (uiData.menuOpen) {
-                uiData.menuOpen = false;
-                console.log("Menu closed");
-            }
-        }
-
-        // Inlined this
-        // const menuItemClicked = () => {
-        //     menuDataProxy.menuClickCount++;
-        // }
 
         while (true) {
             yield (
@@ -92,8 +69,8 @@ function* App() {
                     </div>
                     <div>
                         <h3>Icon Button</h3>
-                        <IconButton icon="emoji_people" />
-                        <IconButton disabled={true} icon="emoji_people" />
+                        <Button type="icon" icon="emoji_people" />
+                        <Button type="icon" disabled={true} icon="emoji_people" />
                     </div>
                     <div>
                         <h3>Toggle Button</h3>
@@ -159,22 +136,25 @@ function* App() {
                     </div>
                     <div>
                         <h3>Menu</h3>
-                        <MenuAnchor>
-                            <Button onclick={openMenu}>Menu</Button>
-                            <Menu open={uiData.menuOpen} onclosed={onClosed}>
-                                <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
-                                <MenuDivider />
-                                <MenuItem icon="check_box_outline_blank">One</MenuItem>
-                                <MenuItem icon="check_box">Two</MenuItem>
-                                <MenuItem icon="check_box_outline_blank">Three</MenuItem>
-                                <MenuDivider />
-                                <MenuItem icon="radio_button_unchecked">Four</MenuItem>
-                                <MenuItem icon="radio_button_unchecked">Five</MenuItem>
-                                <MenuItem icon="radio_button_checked">Six</MenuItem>
-                                <MenuDivider />
-                                <MenuItem disabled={true}>Disabled</MenuItem>
-                            </Menu>
-                        </MenuAnchor>
+                        <Menu>
+                            <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
+                            <MenuDivider />
+                            <MenuItem icon="check_box_outline_blank">One</MenuItem>
+                            <MenuItem icon="check_box">Two</MenuItem>
+                            <MenuItem icon="check_box_outline_blank">Three</MenuItem>
+                            <MenuDivider />
+                            <MenuItem icon="radio_button_unchecked">Four</MenuItem>
+                            <MenuItem icon="radio_button_unchecked">Five</MenuItem>
+                            <MenuItem icon="radio_button_checked">Six</MenuItem>
+                            <MenuDivider />
+                            <MenuItem disabled={true}>Disabled</MenuItem>
+                        </Menu>
+                        <Menu type='text' icon="" label="My Menu">
+                            <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
+                        </Menu>
+                        <Menu type="outlined" icon="settings" label="Settings">
+                            <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
+                        </Menu>
                         <p>Menu item clicked {uiData.menuData.menuClickCount} times.</p>
                     </div>
                     <div>
