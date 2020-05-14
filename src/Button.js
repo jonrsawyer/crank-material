@@ -31,14 +31,18 @@ function buttonBody(icon, iconAfter, children) {
 }
 
 export default async function* Button() {
-    for await (const { children, disabled, icon, iconAfter, onclick, type } of this) {
+    for await (const { children, classes, disabled, icon, iconAfter, onclick, type } of this) {
 
         // Default to type 'text' if type unspecified
-        const buttonClass = typeClass(type || 'text');
+        let buttonClass = typeClass(type || 'text');
 
         // Throwing an error doesn't work here - it's swallowed!
         if (!buttonClass) {
             return <p>Error: unrecognized Button type: '{type}'</p>;
+        }
+
+        if (classes) {
+            buttonClass += ' ' + classes;
         }
 
         // For an icon button, the button body just specifies the icon name; for all other
@@ -46,12 +50,10 @@ export default async function* Button() {
         const body = type === 'icon' ? icon : buttonBody(icon, iconAfter, children);
 
         const promise = yield (
-            <div class="mdc-touch-target-wrapper">
-                <button class={buttonClass} onclick={() => onclick()} disabled={disabled}>{body}</button>
-            </div>
+            <button class={buttonClass} onclick={() => onclick && onclick()} disabled={disabled}>{body}</button>
         );
         const div = await promise; // in case children are async
-        const ripple = new MDCRipple(div.firstElementChild);
+        const ripple = new MDCRipple(div);
         if (type === 'icon') {
             ripple.unbounded = true;
         }

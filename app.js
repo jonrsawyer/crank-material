@@ -13,11 +13,10 @@ import MenuItem from './src/MenuItem';
 import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 import wrap from './src/wrap';
+import TopAppBar from './src/TopAppBar';
 
 
 function* App() {
-
-    const self = this;
 
     const hiddenUIData = {
         iconAfter: false,
@@ -47,7 +46,25 @@ function* App() {
         while (true) {
             yield (
                 <Fragment>
+                    <TopAppBar type="normal" title="Crank-Material SwAK">
+                        <Menu>
+                            <MenuItem>One</MenuItem>
+                            <MenuItem>Two</MenuItem>
+                            <MenuItem>Three</MenuItem>
+                            <MenuItem>Four</MenuItem>
+                        </Menu>
+                        <Button type="icon" icon="search"></Button>
+                        <Button type="icon" icon="backup"></Button>
+                        <Button type="icon" icon="settings"></Button>
+                        <Menu icon="more_vert">
+                            <MenuItem>One</MenuItem>
+                            <MenuItem>Two</MenuItem>
+                            <MenuItem>Three</MenuItem>
+                            <MenuItem>Four</MenuItem>
+                        </Menu>
+                    </TopAppBar>
                     <div>
+                        <p class="mdc-typography--body1">A Swiss army knife of Material Design components implemented using Crank.js.</p>
                         <h3>Button</h3>
                         <Button type="text">Text Button</Button>
                         &nbsp;
@@ -156,6 +173,9 @@ function* App() {
                             <MenuItem onclick={() => uiData.menuData.menuClickCount++}>Menu Item</MenuItem>
                         </Menu>
                         <p>Menu item clicked {uiData.menuData.menuClickCount} times.</p>
+                    </div>
+                    <div>
+                        <h3>Top App Bar</h3>
                     </div>
                     <div>
                         <h3>Textfield</h3>

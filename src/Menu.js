@@ -5,13 +5,13 @@ import { MDCMenu } from '@material/menu';
 // import './Menu.scss';
 
 export default async function* Menu() {
-    for await (const { children, type='icon', icon = 'menu', label, ...buttonProps } of this) {
+    for await (const { children, type='icon', icon = 'menu', label, classes, ...buttonProps } of this) {
 
         let menu;
 
         const promise = yield (
             <div class="mdc-menu-surface--anchor">
-                <Button onclick={() => menu.open = true} type={type} icon={icon} {...buttonProps}>{label}</Button>
+                <Button onclick={() => menu.open = true} type={type} icon={icon} classes={classes} {...buttonProps}>{label}</Button>
                 <div class="mdc-menu mdc-menu-surface">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
                         {children}

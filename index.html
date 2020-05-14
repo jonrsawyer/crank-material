@@ -5,18 +5,13 @@
   <title>Crank-Material</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Needed to prevent extraneous margins in <body>; see https://github.com/material-components/material-components-web/issues/2944 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <!-- TODO Can I get webpack to create these links too? -->
   <link rel="stylesheet" href="app.bundle.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body class="mdc-typography">
-  <h1 class="mdc-typography--headline4">Crank-Material SwAK <i class="material-icons" aria-hidden="true">add_box</i></h1>
-  <p class="mdc-typography--body1">
-    A Swiss army knife of Material Design components implemented using Crank.js.
-  </p>
-  <br>
-  <div id="root" class="foo"></div>
-</body>
+<body id="root" class="mdc-typography"></body>
 
 </html>
