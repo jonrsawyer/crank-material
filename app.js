@@ -14,30 +14,8 @@ import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 import wrap from './src/wrap';
 import TopAppBar from './src/TopAppBar';
-import Drawer from './src/Drawer';
-import List from './src/List';
 import ListItem from './src/ListItem';
-import App from './src/App';
 import displayError from './src/displayError';
-
-function* AppBar() {
-    while (true) {
-        yield (
-            <TopAppBar type="normal" title="Crank-Material SwAK">
-                <Button type="icon" icon="search"></Button>
-                <Button type="icon" icon="backup"></Button>
-                <Button type="icon" icon="settings"></Button>
-                <Menu icon="more_vert">
-                    <MenuItem>One</MenuItem>
-                    <MenuItem>Two</MenuItem>
-                    <MenuItem>Three</MenuItem>
-                    <MenuItem>Four</MenuItem>
-                </Menu>
-            </TopAppBar>
-        )
-    }
-}
-
 
 function* Main() {
 
@@ -71,6 +49,8 @@ function* Main() {
                 <Fragment>
                     <div>
                         <p class="mdc-typography--body1">A Swiss army knife of Material Design components implemented using Crank.js.</p>
+                    </div>
+                    <div>
                         <h3>Button</h3>
                         <Button type="text">Text Button</Button>
                         &nbsp;
@@ -209,17 +189,6 @@ function* Main() {
     }
 }
 
-/*
-    <App>
-        <Drawer>
-            <List>
-                <ListItem>One</ListItem>
-            </List>
-        </Drawer>
-        <Main />
-    </App>
- */
-
 const drawerItems = (
     <Fragment>
         <ListItem>One</ListItem>
@@ -230,7 +199,6 @@ const drawerItems = (
 
 const actions = (
     <Fragment>
-        <Button type="icon" icon="menu"></Button>
         <Button type="icon" icon="search"></Button>
         <Button type="icon" icon="backup"></Button>
         <Button type="icon" icon="settings"></Button>
@@ -244,26 +212,9 @@ const actions = (
 );
 
 const app = (
-    <App>
-        <TopAppBar type="normal" title="Crank-Material SwAK">
-            <Button type="icon" icon="menu"></Button>
-            <Button type="icon" icon="search"></Button>
-            <Button type="icon" icon="backup"></Button>
-            <Button type="icon" icon="settings"></Button>
-            <Menu icon="more_vert">
-                <MenuItem>One</MenuItem>
-                <MenuItem>Two</MenuItem>
-                <MenuItem>Three</MenuItem>
-                <MenuItem>Four</MenuItem>
-            </Menu>
-        </TopAppBar>
-        <Drawer>
-            <List>
-                <ListItem>One</ListItem>
-            </List>
-        </Drawer>
+    <TopAppBar type="normal" title="Crank-Material SwAK" drawerItems={drawerItems} actions={actions} modal={true}>
         <Main />
-    </App>
+    </TopAppBar>
 );
 renderer.render(app, document.body/*.getElementById("top")*/);
 

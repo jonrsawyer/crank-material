@@ -16,7 +16,6 @@ export default async function* Drawer() {
                 </aside>
             );
             const aside = await p; // in case children are async
-            //const drawer = new MDCDrawer(aside); // for ripple
         }
     } catch (error) {
         return displayError(error);

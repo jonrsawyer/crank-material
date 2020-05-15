@@ -19,20 +19,24 @@
 @import "@material/top-app-bar/mdc-top-app-bar";
 @import "@material/drawer/mdc-drawer";
 
-.mdc-drawer-app-content {
-    flex: auto;
-    overflow: auto;
-    position: relative;
-  }
+// MDC Web Drawer page says I need the below for drawers with topAppBar, but I don't seem to 
+// (though the topAppBar doesn't scroll off without the position:absolute thing below)
+// .mdc-drawer-app-content {
+//     flex: auto;
+//     overflow: auto;
+//     position: relative;
+//   }
   
-  .main-content {
-    overflow: auto;
-    height: 100%;
-  }
+//   .main-content {
+//     overflow: auto;
+//     height: 100%;
+//   }
 
-  .app-bar {
-    position: absolute;
-  }
+//   .app-bar {
+//     position: absolute;
+//   }
+
+
 // Check out the MDC Web documentation for how to use MDC Sass mixins:
 // https://github.com/material-components/material-components-web
 // .foo-button {
