@@ -1,5 +1,6 @@
 import Button from './Button.js';
 import { MDCMenu } from '@material/menu';
+import displayError from './displayError';
 
 // TODO This has no effect until build process generates the HTML file
 // import './Menu.scss';
@@ -9,7 +10,8 @@ export default async function* Menu() {
 
         let menu;
 
-        const promise = yield (
+        try {
+        const p = yield (
             <div class="mdc-menu-surface--anchor">
                 <Button onclick={() => menu.open = true} type={type} icon={icon} classes={classes} {...buttonProps}>{label}</Button>
                 <div class="mdc-menu mdc-menu-surface">
@@ -19,7 +21,10 @@ export default async function* Menu() {
                 </div>
             </div>
         );
-        const div = await promise; // in case children are async
+        const div = await p; // in case children are async
         menu = new MDCMenu(div.children[1]); // for ripple
+        } catch (error) {
+            return displayError(error);
+        }
     }
 }

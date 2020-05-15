@@ -41,6 +41,7 @@
     "@material/checkbox": "^6.0.0",
     "@material/chips": "^6.0.0",
     "@material/circular-progress": "^6.0.0",
+    "@material/drawer": "^6.0.0",
     "@material/form-field": "^6.0.0",
     "@material/icon-button": "^6.0.0",
     "@material/menu": "^6.0.0",

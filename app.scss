@@ -17,7 +17,22 @@
 @import "@material/menu-surface/mdc-menu-surface";
 @import "@material/list/mdc-list";
 @import "@material/top-app-bar/mdc-top-app-bar";
+@import "@material/drawer/mdc-drawer";
 
+.mdc-drawer-app-content {
+    flex: auto;
+    overflow: auto;
+    position: relative;
+  }
+  
+  .main-content {
+    overflow: auto;
+    height: 100%;
+  }
+
+  .app-bar {
+    position: absolute;
+  }
 // Check out the MDC Web documentation for how to use MDC Sass mixins:
 // https://github.com/material-components/material-components-web
 // .foo-button {

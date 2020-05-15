@@ -14,9 +14,32 @@ import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 import wrap from './src/wrap';
 import TopAppBar from './src/TopAppBar';
+import Drawer from './src/Drawer';
+import List from './src/List';
+import ListItem from './src/ListItem';
+import App from './src/App';
+import displayError from './src/displayError';
+
+function* AppBar() {
+    while (true) {
+        yield (
+            <TopAppBar type="normal" title="Crank-Material SwAK">
+                <Button type="icon" icon="search"></Button>
+                <Button type="icon" icon="backup"></Button>
+                <Button type="icon" icon="settings"></Button>
+                <Menu icon="more_vert">
+                    <MenuItem>One</MenuItem>
+                    <MenuItem>Two</MenuItem>
+                    <MenuItem>Three</MenuItem>
+                    <MenuItem>Four</MenuItem>
+                </Menu>
+            </TopAppBar>
+        )
+    }
+}
 
 
-function* App() {
+function* Main() {
 
     const hiddenUIData = {
         iconAfter: false,
@@ -46,23 +69,6 @@ function* App() {
         while (true) {
             yield (
                 <Fragment>
-                    <TopAppBar type="normal" title="Crank-Material SwAK">
-                        <Menu>
-                            <MenuItem>One</MenuItem>
-                            <MenuItem>Two</MenuItem>
-                            <MenuItem>Three</MenuItem>
-                            <MenuItem>Four</MenuItem>
-                        </Menu>
-                        <Button type="icon" icon="search"></Button>
-                        <Button type="icon" icon="backup"></Button>
-                        <Button type="icon" icon="settings"></Button>
-                        <Menu icon="more_vert">
-                            <MenuItem>One</MenuItem>
-                            <MenuItem>Two</MenuItem>
-                            <MenuItem>Three</MenuItem>
-                            <MenuItem>Four</MenuItem>
-                        </Menu>
-                    </TopAppBar>
                     <div>
                         <p class="mdc-typography--body1">A Swiss army knife of Material Design components implemented using Crank.js.</p>
                         <h3>Button</h3>
@@ -199,22 +205,67 @@ function* App() {
             )
         }
     } catch (error) {
-        return (
-            <div>
-                <h4>Error</h4>
-                {error.message}
-                <pre>
-                    {error.stack}
-                </pre>
-            </div>
-        );
+        return displayError(error);
     }
 }
 
-// TODO This should be in a separate file...
-const content = <App />;
-const root = document.getElementById('root');
-renderer.render(content, root);
+/*
+    <App>
+        <Drawer>
+            <List>
+                <ListItem>One</ListItem>
+            </List>
+        </Drawer>
+        <Main />
+    </App>
+ */
+
+const drawerItems = (
+    <Fragment>
+        <ListItem>One</ListItem>
+        <ListItem>Two</ListItem>
+        <ListItem>Three</ListItem>
+    </Fragment>
+);
+
+const actions = (
+    <Fragment>
+        <Button type="icon" icon="menu"></Button>
+        <Button type="icon" icon="search"></Button>
+        <Button type="icon" icon="backup"></Button>
+        <Button type="icon" icon="settings"></Button>
+        <Menu icon="more_vert">
+            <MenuItem>One</MenuItem>
+            <MenuItem>Two</MenuItem>
+            <MenuItem>Three</MenuItem>
+            <MenuItem>Four</MenuItem>
+        </Menu>
+    </Fragment>
+);
+
+const app = (
+    <App>
+        <TopAppBar type="normal" title="Crank-Material SwAK">
+            <Button type="icon" icon="menu"></Button>
+            <Button type="icon" icon="search"></Button>
+            <Button type="icon" icon="backup"></Button>
+            <Button type="icon" icon="settings"></Button>
+            <Menu icon="more_vert">
+                <MenuItem>One</MenuItem>
+                <MenuItem>Two</MenuItem>
+                <MenuItem>Three</MenuItem>
+                <MenuItem>Four</MenuItem>
+            </Menu>
+        </TopAppBar>
+        <Drawer>
+            <List>
+                <ListItem>One</ListItem>
+            </List>
+        </Drawer>
+        <Main />
+    </App>
+);
+renderer.render(app, document.body/*.getElementById("top")*/);
 
 if (module.hot) {
     module.hot.accept();
