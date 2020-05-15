@@ -17,6 +17,8 @@ import TopAppBar from './src/TopAppBar';
 import ListItem from './src/ListItem';
 import displayError from './src/displayError';
 import Drawer from './src/Drawer';
+import DrawerItem from './src/DrawerItem';
+import DrawerDivider from './src/DrawerDivider';
 
 function* Main() {
 
@@ -206,9 +208,10 @@ const actions = (
 
 const drawer = (
     <Drawer modal={true} title="Drawer Title" subtitle="Drawer subtitle">
-        <ListItem>One</ListItem>
-        <ListItem>Two</ListItem>
-        <ListItem>Three</ListItem>
+        <DrawerItem label="One" icon="settings" onclick={() => console.log('drawer item clicked')}/>
+        <DrawerItem label="Two"  />
+        <DrawerDivider />
+        <DrawerItem label="three" icon="settings" />
     </Drawer>
 );
 

@@ -29,9 +29,9 @@ export default async function* Drawer() {
                     <aside class={asideClass}>
                         {header}
                         <div class="mdc-drawer__content">
-                            <List>
+                            <nav class="mdc-list">
                                 {children}
-                            </List>
+                            </nav>
                         </div>
                     </aside>
                     {scrim}
