@@ -14,7 +14,6 @@ import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 import wrap from './src/wrap';
 import TopAppBar from './src/TopAppBar';
-import ListItem from './src/ListItem';
 import displayError from './src/displayError';
 import Drawer from './src/Drawer';
 import DrawerItem from './src/DrawerItem';
@@ -22,34 +21,51 @@ import DrawerDivider from './src/DrawerDivider';
 
 function* Main() {
 
-    const hiddenUIData = {
-        iconAfter: false,
-        toggled: false,
-        radio: 0,
-        menuOpen: false,
-        menuData: {
-            menuClickCount: 0
-        }
-    }
-
-    const uiData = wrap(hiddenUIData, () => this.refresh());
-
     try {
-        const onClick = () => {
-            uiData.iconAfter = !uiData.iconAfter;
-        }
+        for (const { uiData:hiddenUIData } of this) {
 
-        const onToggle = () => {
-            uiData.toggled = !uiData.toggled;
-        }
+            const uiData = wrap(hiddenUIData, () => {
+                console.log('refreshing');
+                this.refresh()
+            });
 
-        const onRadio = (r) => {
-            uiData.radio = r;
-        }
+            const onClick = () => {
+                uiData.iconAfter = !uiData.iconAfter;
+            }
 
-        while (true) {
-            yield (
+            const onToggle = () => {
+                uiData.toggled = !uiData.toggled;
+            }
+
+            const onRadio = (r) => {
+                uiData.radio = r;
+            }
+
+            const actions = (
                 <Fragment>
+                    <Button type="icon" icon="search"></Button>
+                    <Button type="icon" icon="backup"></Button>
+                    <Button type="icon" icon="settings"></Button>
+                    <Menu icon="more_vert">
+                        <MenuItem>One</MenuItem>
+                        <MenuItem>Two</MenuItem>
+                        <MenuItem>Three</MenuItem>
+                        <MenuItem>Four</MenuItem>
+                    </Menu>
+                </Fragment>
+            );
+
+            const drawer = (
+                <Drawer modal={uiData.toggled} title="Drawer Title" subtitle="Drawer subtitle">
+                    <DrawerItem label="One" icon="settings" onclick={() => console.log('drawer item clicked')} />
+                    <DrawerItem label="Two" />
+                    <DrawerDivider />
+                    <DrawerItem label="three" icon="settings" />
+                </Drawer>
+            );
+
+            yield (
+                <TopAppBar type="normal" title="Crank-Material SwAK" drawer={drawer} actions={actions}>
                     <div>
                         <p class="mdc-typography--body1">A Swiss army knife of Material Design components implemented using Crank.js.</p>
                     </div>
@@ -184,7 +200,7 @@ function* Main() {
                         &nbsp;
                         <Textfield type="textarea"></Textfield>
                     </div>
-                </Fragment>
+                </TopAppBar>
             )
         }
     } catch (error) {
@@ -192,35 +208,19 @@ function* Main() {
     }
 }
 
-const actions = (
-    <Fragment>
-        <Button type="icon" icon="search"></Button>
-        <Button type="icon" icon="backup"></Button>
-        <Button type="icon" icon="settings"></Button>
-        <Menu icon="more_vert">
-            <MenuItem>One</MenuItem>
-            <MenuItem>Two</MenuItem>
-            <MenuItem>Three</MenuItem>
-            <MenuItem>Four</MenuItem>
-        </Menu>
-    </Fragment>
-);
+const uiData = {
+    iconAfter: false,
+    toggled: false,
+    radio: 0,
+    menuOpen: false,
+    menuData: {
+        menuClickCount: 0
+    }
+}
 
-const drawer = (
-    <Drawer modal={true} title="Drawer Title" subtitle="Drawer subtitle">
-        <DrawerItem label="One" icon="settings" onclick={() => console.log('drawer item clicked')}/>
-        <DrawerItem label="Two"  />
-        <DrawerDivider />
-        <DrawerItem label="three" icon="settings" />
-    </Drawer>
-);
+const main = <Main uiData={uiData} />;
 
-const app = (
-    <TopAppBar type="normal" title="Crank-Material SwAK" drawer={drawer} actions={actions}>
-        <Main />
-    </TopAppBar>
-);
-renderer.render(app, document.body/*.getElementById("top")*/);
+renderer.render(main, document.body);
 
 if (module.hot) {
     module.hot.accept();

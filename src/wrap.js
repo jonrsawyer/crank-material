@@ -17,7 +17,7 @@ function arm(changeCallback) {
 
 export default function wrap(data, changeCallback) {
     if (!data || typeof data != 'object') {
-        throw new Error('Unacceptable data object for wrap()');
+        throw new Error('Unacceptable data object for wrap(): '+ typeof data);
     }
     return new Proxy(data, {
         get: function (target, propertyKey) {
