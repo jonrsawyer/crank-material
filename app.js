@@ -13,6 +13,7 @@ import MenuItem from './src/MenuItem';
 import { renderer } from '@bikeshaving/crank/dom';
 import { Fragment } from '@bikeshaving/crank';
 import wrap from './src/wrap';
+import App from './src/App';
 import TopAppBar from './src/TopAppBar';
 import displayError from './src/displayError';
 import Drawer from './src/Drawer';
@@ -22,12 +23,9 @@ import DrawerDivider from './src/DrawerDivider';
 function* Main() {
 
     try {
-        for (const { uiData:hiddenUIData } of this) {
+        for (const { uiData: hiddenUIData } of this) {
 
-            const uiData = wrap(hiddenUIData, () => {
-                console.log('refreshing');
-                this.refresh()
-            });
+            const uiData = wrap(hiddenUIData, () => this.refresh());
 
             const onClick = () => {
                 uiData.iconAfter = !uiData.iconAfter;
@@ -41,20 +39,6 @@ function* Main() {
                 uiData.radio = r;
             }
 
-            const actions = (
-                <Fragment>
-                    <Button type="icon" icon="search"></Button>
-                    <Button type="icon" icon="backup"></Button>
-                    <Button type="icon" icon="settings"></Button>
-                    <Menu icon="more_vert">
-                        <MenuItem>One</MenuItem>
-                        <MenuItem>Two</MenuItem>
-                        <MenuItem>Three</MenuItem>
-                        <MenuItem>Four</MenuItem>
-                    </Menu>
-                </Fragment>
-            );
-
             const drawer = (
                 <Drawer modal={uiData.toggled} title="Drawer Title" subtitle="Drawer subtitle">
                     <DrawerItem label="One" icon="settings" onclick={() => console.log('drawer item clicked')} />
@@ -64,8 +48,24 @@ function* Main() {
                 </Drawer>
             );
 
+            const appBarType = "normal";
+
+            const topAppBar = (
+                <TopAppBar nav={!!drawer} title="Crank-Material SwAK" type={appBarType} >
+                    <Button type="icon" icon="search"></Button>
+                    <Button type="icon" icon="backup"></Button>
+                    <Button type="icon" icon="settings"></Button>
+                    <Menu icon="more_vert">
+                        <MenuItem icon="check">One</MenuItem>
+                        <MenuItem>Two</MenuItem>
+                        <MenuItem>Three</MenuItem>
+                        <MenuItem>Four</MenuItem>
+                    </Menu>
+                </TopAppBar>
+            );
+
             yield (
-                <TopAppBar type="normal" title="Crank-Material SwAK" drawer={drawer} actions={actions}>
+                <App type={appBarType} drawer={drawer} topAppBar={topAppBar}>
                     <div>
                         <p class="mdc-typography--body1">A Swiss army knife of Material Design components implemented using Crank.js.</p>
                     </div>
@@ -200,7 +200,7 @@ function* Main() {
                         &nbsp;
                         <Textfield type="textarea"></Textfield>
                     </div>
-                </TopAppBar>
+                </App>
             )
         }
     } catch (error) {
