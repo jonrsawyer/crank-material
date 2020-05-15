@@ -6,11 +6,27 @@ import { MDCDrawer } from '@material/drawer';
 // TODO This has no effect until build process generates the HTML file
 // import './Menu.scss';
 
+// TODO This belongs in TopAppBar only.
+function spacerClass(type) {
+    switch (type) {
+        case 'dense': return 'mdc-top-app-bar--dense-fixed-adjust';
+        case 'fixed': return 'mdc-top-app-bar--fixed-adjust';
+        case 'prominent': return 'mdc-top-app-bar--prominent-fixed-adjust';
+        case 'short': return 'mdc-top-app-bar--short-fixed-adjust';
+        case 'short-closed': return 'mdc-top-app-bar--short-fixed-adjust';
+        case 'normal': return 'mdc-top-app-bar--fixed-adjust';
+        default: return undefined;
+    }
+}
+
 export default async function* App() {
     for await (const { topAppBar, children, drawer } of this) {
 
         try {
-            const spacerClass = topAppBar.props.spacerClass;
+            // Hack: TopAppBar sets this prop for us here
+            const type = topAppBar.props.type;
+            const divClass = spacerClass(type);
+            console.log(divClass);
 
             const promise = yield (
                 <Fragment>
@@ -18,7 +34,7 @@ export default async function* App() {
                     <div class="mdc-drawer-app-content">
                         {topAppBar}
                         <main class="main-content">
-                            <div class={spacerClass}>
+                            <div class={divClass}>
                                 {children}
                             </div>
                         </main>

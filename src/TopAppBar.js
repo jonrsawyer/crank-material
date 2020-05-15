@@ -36,7 +36,7 @@ export default async function* TopAppBar() {
             const typeClass = appBarClass(type);
 
             // Hack: this is needed in App, so set it on props here
-            props.spacerClass = spacerClass(type);
+            this.set("spacerClass", spacerClass(type));
 
             if (typeClass === undefined) {
                 return <p>Error: unrecognized TopAppBar type: {type}</p>
