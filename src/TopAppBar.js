@@ -31,28 +31,8 @@ function spacerClass(type) {
     }
 }
 
-function createDrawer(drawerItems, modal) {
-    const asideClass = "mdc-drawer " + (modal ? "mdc-drawer--modal" : "mdc-drawer--dismissible")
-    const header = (
-        <div class="mdc-drawer__header">
-            <h3 class="mdc-drawer__title">Mail</h3>
-            <h6 class="mdc-drawer__subtitle">email@material.io</h6>
-        </div>
-    );
-    return (
-        <aside class={asideClass}>
-            {header}
-            <div class="mdc-drawer__content">
-                <ul class="mdc-list">
-                    {drawerItems}
-                </ul>
-            </div>
-        </aside>
-    );
-}
-
 export default async function* TopAppBar() {
-    for await (const { actions, children, drawerItems, modal, title, type = 'normal' } of this) {
+    for await (const { actions, children, drawer, title, type = 'normal' } of this) {
 
         try {
             const typeClass = appBarClass(type);
@@ -62,20 +42,16 @@ export default async function* TopAppBar() {
             const headerClass = 'app-bar mdc-top-app-bar' + typeClass;
 
             // Create the nav button if there is a drawer
-            const nav = drawerItems && <Button type="icon" icon="menu" classes="mdc-top-app-bar__navigation-icon" />;
+            const nav = drawer && <Button type="icon" icon="menu" classes="mdc-top-app-bar__navigation-icon" />;
 
             // This bit of trickery is needed to ensure actions is an array even when only one item supplied
             [].concat(actions).map((action => {
                 action.props.classes = (action.props.classes || '') + ' mdc-top-app-bar__action-item';
             }));
 
-            const drawer = drawerItems && createDrawer(drawerItems, modal);
-            const scrim = modal && <div class="mdc-drawer-scrim"></div>;
-
             const promise = yield (
                 <Fragment>
                     {drawer}
-                    {scrim}
                     <div class="mdc-drawer-app-content">
                         <header class={headerClass}>
                             <div class="mdc-top-app-bar__row">
@@ -97,7 +73,7 @@ export default async function* TopAppBar() {
                 </Fragment>
             );
             const fragment = await promise; // in case children are async
-            const drawerElement = drawerItems && fragment[0];
+            const drawerElement = drawer && fragment[0];
             // Index from the end to avoid issues with presence or absence of drawer and scrim
             const appContent = fragment[fragment.length - 1];
             const topAppBarElement = appContent.firstElementChild;
@@ -108,6 +84,7 @@ export default async function* TopAppBar() {
                 let drawerComp;
                 // HACK!!! This constructor expects drawerElement to have a parentNode (e.g. added to DOM), which it isn't yet.
                 setTimeout(() => {
+                    // This is a little weird, creating MDCDrawer here and not in the Drawer component.
                     drawerComp = new MDCDrawer(drawerElement);
                 }, 50);
                 topAppBar.listen('MDCTopAppBar:nav', () => {

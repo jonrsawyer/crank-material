@@ -16,6 +16,7 @@ import wrap from './src/wrap';
 import TopAppBar from './src/TopAppBar';
 import ListItem from './src/ListItem';
 import displayError from './src/displayError';
+import Drawer from './src/Drawer';
 
 function* Main() {
 
@@ -189,14 +190,6 @@ function* Main() {
     }
 }
 
-const drawerItems = (
-    <Fragment>
-        <ListItem>One</ListItem>
-        <ListItem>Two</ListItem>
-        <ListItem>Three</ListItem>
-    </Fragment>
-);
-
 const actions = (
     <Fragment>
         <Button type="icon" icon="search"></Button>
@@ -211,8 +204,16 @@ const actions = (
     </Fragment>
 );
 
+const drawer = (
+    <Drawer modal={true} title="Drawer Title" subtitle="Drawer subtitle">
+        <ListItem>One</ListItem>
+        <ListItem>Two</ListItem>
+        <ListItem>Three</ListItem>
+    </Drawer>
+);
+
 const app = (
-    <TopAppBar type="normal" title="Crank-Material SwAK" drawerItems={drawerItems} actions={actions} modal={true}>
+    <TopAppBar type="normal" title="Crank-Material SwAK" drawer={drawer} actions={actions}>
         <Main />
     </TopAppBar>
 );
