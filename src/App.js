@@ -20,13 +20,12 @@ function spacerClass(type) {
 }
 
 export default async function* App() {
-    for await (const { topAppBar, children, drawer } of this) {
+    try {
+        for await (const { topAppBar, children, drawer } of this) {
 
-        try {
             // Hack: TopAppBar sets this prop for us here
             const type = topAppBar.props.type;
             const divClass = spacerClass(type);
-            console.log(divClass);
 
             const promise = yield (
                 <Fragment>
@@ -60,8 +59,8 @@ export default async function* App() {
                     drawerComp.open = !drawerComp.open;
                 });
             }
-        } catch (error) {
-            return displayError(error);
         }
+    } catch (error) {
+        return displayError(error);
     }
 }

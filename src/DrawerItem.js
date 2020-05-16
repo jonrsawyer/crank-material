@@ -1,7 +1,6 @@
 import displayError from './displayError.js';
 
 export default function* DrawerItem() {
-
     try {
         for (const { label, icon, onclick, activated } of this) {
 

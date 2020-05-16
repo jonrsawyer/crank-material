@@ -1,8 +1,7 @@
 import displayError from './displayError';
 import Button from './Button.js';
 
-// TODO This has no effect until build process generates the HTML file
-// import './Menu.scss';
+import './TopAppBar.scss';
 
 function appBarClass(type) {
     switch (type) {
@@ -29,10 +28,10 @@ function spacerClass(type) {
 }
 
 export default async function* TopAppBar() {
-    for await ( const props of this) {
-        
-        const { children, nav, title, type = 'normal' } = props;
-        try {
+    try {
+        for await (const props of this) {
+
+            const { children, nav, title, type = 'normal' } = props;
             const typeClass = appBarClass(type);
 
             // Hack: this is needed in App, so set it on props here
@@ -65,8 +64,8 @@ export default async function* TopAppBar() {
                 </header>
             );
             const fragment = await promise; // in case children are async
-        } catch (error) {
-            return displayError(error);
         }
+    } catch (error) {
+        return displayError(error);
     }
 }

@@ -1,8 +1,7 @@
 import { MDCList } from '@material/list';
 import displayError from './displayError';
 
-// TODO This has no effect until build process generates the HTML file
-// import './Menu.scss';
+import './List.scss';
 
 export default async function* List() {
     try {

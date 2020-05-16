@@ -3,6 +3,7 @@ import { Fragment } from '@bikeshaving/crank';
 
 // TODO This has no effect until build process generates the HTML file
 import './Button.scss';
+import displayError from "./displayError";
 
 function typeClass(type) {
     switch (type) {
@@ -31,31 +32,35 @@ function buttonBody(icon, iconAfter, children) {
 }
 
 export default async function* Button() {
-    for await (const { children, classes, disabled, icon, iconAfter, onclick, type } of this) {
+    try {
+        for await (const { children, classes, disabled, icon, iconAfter, onclick, type } of this) {
 
-        // Default to type 'text' if type unspecified
-        let buttonClass = typeClass(type || 'text');
+            // Default to type 'text' if type unspecified
+            let buttonClass = typeClass(type || 'text');
 
-        // Throwing an error doesn't work here - it's swallowed!
-        if (!buttonClass) {
-            return <p>Error: unrecognized Button type: '{type}'</p>;
+            // Throwing an error doesn't work here - it's swallowed!
+            if (!buttonClass) {
+                return <p>Error: unrecognized Button type: '{type}'</p>;
+            }
+
+            if (classes) {
+                buttonClass += ' ' + classes;
+            }
+
+            // For an icon button, the button body just specifies the icon name; for all other
+            // button types, the button body is more complex.
+            const body = type === 'icon' ? icon : buttonBody(icon, iconAfter, children);
+
+            const promise = yield (
+                <button class={buttonClass} onclick={() => onclick && onclick()} disabled={disabled}>{body}</button>
+            );
+            const div = await promise; // in case children are async
+            const ripple = new MDCRipple(div);
+            if (type === 'icon') {
+                ripple.unbounded = true;
+            }
         }
-
-        if (classes) {
-            buttonClass += ' ' + classes;
-        }
-
-        // For an icon button, the button body just specifies the icon name; for all other
-        // button types, the button body is more complex.
-        const body = type === 'icon' ? icon : buttonBody(icon, iconAfter, children);
-
-        const promise = yield (
-            <button class={buttonClass} onclick={() => onclick && onclick()} disabled={disabled}>{body}</button>
-        );
-        const div = await promise; // in case children are async
-        const ripple = new MDCRipple(div);
-        if (type === 'icon') {
-            ripple.unbounded = true;
-        }
+    } catch (error) {
+        return displayError(error);
     }
 }

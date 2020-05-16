@@ -1,12 +1,12 @@
 import Button from './src/Button';
 import ToggleButton from './src/ToggleButton';
-import RadioButton from './src/RadioButton';
+import RadioButton from './src/Radio';
 import Switch from './src/Switch';
 import Checkbox from './src/Checkbox';
 import Chip from './src/Chip';
 import ChipSet from './src/ChipSet';
 import CircularProgress from './src/CircularProgress';
-import Textfield from './src/Textfield';
+import TextField from './src/TextField';
 import Menu from './src/Menu';
 import MenuDivider from './src/MenuDivider';
 import MenuItem from './src/MenuItem';
@@ -184,21 +184,21 @@ function* Main() {
                     </div>
                     <div>
                         <h3>Textfield</h3>
-                        <Textfield type="filled" label="First Name"></Textfield>
+                        <TextField type="filled" label="First Name"></TextField>
                         &nbsp;
-                        <Textfield type="filled"></Textfield>
+                        <TextField type="filled"></TextField>
                         <p></p>
-                        <Textfield type="outlined" label="Last Name"></Textfield>
+                        <TextField type="outlined" label="Last Name"></TextField>
                         &nbsp;
-                        <Textfield type="outlined"></Textfield>
+                        <TextField type="outlined"></TextField>
                         <p></p>
-                        <Textfield type="full-width" label="Address"></Textfield>
+                        <TextField type="full-width" label="Address"></TextField>
                         &nbsp;
-                        <Textfield type="full-width"></Textfield>
+                        <TextField type="full-width"></TextField>
                         <p></p>
-                        <Textfield type="textarea" label="Description"></Textfield>
+                        <TextField type="textarea" label="Description"></TextField>
                         &nbsp;
-                        <Textfield type="textarea"></Textfield>
+                        <TextField type="textarea"></TextField>
                     </div>
                 </App>
             )

@@ -32,7 +32,7 @@
     "sinon": "^9.0.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1",
+    "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
@@ -50,7 +50,8 @@
     "@material/switch": "^6.0.0",
     "@material/textfield": "^6.0.0",
     "@material/top-app-bar": "^6.0.0",
-    "@material/typography": "^6.0.0"
+    "@material/typography": "^6.0.0",
+    "sourcemapped-stacktrace": "^1.1.11"
   },
   "engines": {
     "node": "14.x"

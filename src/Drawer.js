@@ -3,8 +3,7 @@ import displayError from './displayError';
 import { Fragment } from '@bikeshaving/crank';
 import List from './List.js';
 
-// TODO This has no effect until build process generates the HTML file
-// import './Menu.scss';
+import './Drawer.scss';
 
 export default async function* Drawer() {
     try {

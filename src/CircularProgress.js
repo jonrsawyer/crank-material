@@ -1,8 +1,8 @@
 import { MDCCircularProgress } from '@material/circular-progress';
 import { Fragment } from '@bikeshaving/crank';
+import displayError from './displayError';
 
-// TODO This has no effect until build process generates the HTML file
-//import './CircularProgress.scss';
+import './CircularProgress.scss';
 
 const small = {
     viewBox: "0 0 48 48",
@@ -77,24 +77,28 @@ function indeterminateContainers(s, animateColor) {
 }
 
 export default async function* CircularProgress() {
-    for await (const props of this) {
-        const { animateColor, determinate, label, progress, size } = props;
+    try {
+        for await (const props of this) {
+            const { animateColor, determinate, label, progress, size } = props;
 
-        const s = size === "small" ? small : size === "medium" ? medium : large;
+            const s = size === "small" ? small : size === "medium" ? medium : large;
 
-        //const container = (determinate ? determinateContainer(s) : indeterminateContainers(s, animateColor));
+            //const container = (determinate ? determinateContainer(s) : indeterminateContainers(s, animateColor));
 
-        const divClass = "mdc-circular-progress mdc-circular-progress--" + size;
+            const divClass = "mdc-circular-progress mdc-circular-progress--" + size;
 
-        const promise = yield (
-            <div class={divClass} role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax="1">
-                {determinateContainer(s)}
-                {indeterminateContainers(s, animateColor)}
-            </div>
-        );
-        const div = await promise; // Chip children are async
-        const circularProgress = new MDCCircularProgress(div); // for ripple
-        circularProgress.determinate = determinate;
-        circularProgress.progress = progress;
+            const promise = yield (
+                <div class={divClass} role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax="1">
+                    {determinateContainer(s)}
+                    {indeterminateContainers(s, animateColor)}
+                </div>
+            );
+            const div = await promise; // Chip children are async
+            const circularProgress = new MDCCircularProgress(div); // for ripple
+            circularProgress.determinate = determinate;
+            circularProgress.progress = progress;
+        }
+    } catch (error) {
+        return displayError(error);
     }
 }
