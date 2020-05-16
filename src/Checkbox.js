@@ -1,8 +1,7 @@
 import { MDCCheckbox } from '@material/checkbox';
-
-// TODO This has no effect until build process generates the HTML file
-import './Checkbox.scss';
 import displayError from './displayError';
+
+import './Checkbox.scss';
 
 export default async function* Checkbox() {
     try {

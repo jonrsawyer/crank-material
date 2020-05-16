@@ -1,9 +1,8 @@
 import { MDCRipple } from "@material/ripple";
 import { Fragment } from '@bikeshaving/crank';
-
-// TODO This has no effect until build process generates the HTML file
-import './Button.scss';
 import displayError from "./displayError";
+
+import './Button.scss';
 
 function typeClass(type) {
     switch (type) {
