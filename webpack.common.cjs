@@ -5,6 +5,11 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        }
+    },
     module: {
         rules: [
             {
